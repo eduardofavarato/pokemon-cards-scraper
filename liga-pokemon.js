@@ -1,31 +1,46 @@
-import { sleep } from './util.js';
-import Card from './model/card.js';
-import ExcelAdapter from './model/excel-adapter.js';
-import cheerio from 'cheerio';
-import axios from 'axios';
+const util = require('./util.js');
+const Card = require('./model/card.js');
+const ExcelAdapter = require('./model/excel-adapter.js');
+const cheerio = require('cheerio');
+const axios = require('axios');
 
 const BASE_URL = `https://www.ligapokemon.com.br/?view=cards/search&card=&page=`
 const excel = new ExcelAdapter('PokemonCards.xlsx');
 
+let numberOfPages = 0;
 let numberOfPagesProcessed = 0;
 
-getNumberOfPages()
-	.then(async (numberOfPages) => {
-		for (let pageNumber = 1; pageNumber <= numberOfPages; pageNumber++) {
-			const pageUrl = BASE_URL.concat(pageNumber);
-			processPage(pageUrl);
-		}
-		
-		while (numberOfPagesProcessed != numberOfPages) {
-			console.log(`${numberOfPagesProcessed} pages processed of ${numberOfPages}`);
-			await sleep(500);	
-		}
-		
-		excel.saveFile();
-		console.log(`Completed successfully!`);
-	})
+let ligaPokemon = {};
+ligaPokemon.process = async function (){
+	let attemptNumber = 0;
 	
-function processPage(pageUrl) {
+	while(numberOfPages == 0) {
+		util.handleAttempts(attemptNumber);
+		attemptNumber++;
+		numberOfPages = await getNumberOfPages();
+	}
+	
+	processPages(numberOfPages);
+}
+
+async function processPages(numberOfPages) {
+	for (let pageNumber = 1; pageNumber <= numberOfPages; pageNumber++) {
+		const pageUrl = BASE_URL.concat(pageNumber);
+		processPage(pageUrl, 0);
+	}
+	
+	while (numberOfPagesProcessed != numberOfPages) {
+		console.log(`${numberOfPagesProcessed} pages processed of ${numberOfPages}`);
+		await util.sleep(500);	
+	}
+	
+	excel.saveFile();
+	console.log(`Completed successfully!`);
+}
+	
+function processPage(pageUrl, attemptNumber) {
+	util.handleAttempts(attemptNumber);
+	
 	axios.get(pageUrl)
 		.then((response) => {
 			const $ = cheerio.load(response.data);
@@ -38,8 +53,9 @@ function processPage(pageUrl) {
 			
 			numberOfPagesProcessed++;
 		}).catch(function (e) {
-			console.log(`############### ERROR ###############`);
-			console.log(e);
+			attemptNumber++;
+			console.log(`Attempt #${attemptNumber} to scrap ${pageUrl}`);
+			processPage(pageUrl, attemptNumber);
 		});	
 }
 
@@ -89,3 +105,5 @@ function getNumberOfPages() {
 			return 0;
 		});	
 }
+
+module.exports = ligaPokemon;

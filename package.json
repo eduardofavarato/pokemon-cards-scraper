@@ -1,8 +1,9 @@
 {
-  "name": "pokemon-cards-crawler",
+  "name": "pokemon-cards-scraper",
   "version": "1.0.0",
-  "description": "",
-  "main": "liga-pokemon.js",
+  "description": "Pokemon cards scraper",
+  "main": "bin.js",
+  "bin": "bin.js", 
   "dependencies": {
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
@@ -14,13 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eduardofavarato/pokemon-cards-crawler.git"
+    "url": "git+https://github.com/eduardofavarato/pokemon-cards-scraper.git"
   },
-  "author": "",
+  "author": "Eduardo Favarato",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eduardofavarato/pokemon-cards-crawler/issues"
+    "url": "https://github.com/eduardofavarato/pokemon-cards-scraper/issues"
   },
-  "homepage": "https://github.com/eduardofavarato/pokemon-cards-crawler#readme",
-  "type": "module"
+  "homepage": "https://github.com/eduardofavarato/pokemon-cards-scraper#readme"
 }

@@ -1,6 +1,6 @@
-import excel from 'excel4node';
+const excel = require('excel4node');
 
-export default class ExcelAdapter {
+class ExcelAdapter {
 	constructor(filename) {
 		this.filename = filename;
 		this.workbook = new excel.Workbook();
@@ -53,3 +53,5 @@ export default class ExcelAdapter {
 		this.currentLine++;
 	}
 }
+
+module.exports = ExcelAdapter;

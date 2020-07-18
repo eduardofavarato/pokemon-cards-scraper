@@ -1,4 +1,4 @@
-export default class Card {
+class Card {
 	constructor(set, name, rarity, type, lowestPrice, averagePrice, highestPrice) {
 		this.set = set;  
 		this.name = name;  
@@ -20,3 +20,5 @@ export default class Card {
 		console.log(`__________________________________`);
 	}
 }
+
+module.exports = Card;
