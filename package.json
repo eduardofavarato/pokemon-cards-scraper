@@ -1,0 +1,25 @@
+{
+  "name": "pokemon-cards-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "liga-pokemon.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "cheerio": "^1.0.0-rc.3",
+    "excel4node": "^1.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduardofavarato/pokemon-cards-crawler.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eduardofavarato/pokemon-cards-crawler/issues"
+  },
+  "homepage": "https://github.com/eduardofavarato/pokemon-cards-crawler#readme"
+}
